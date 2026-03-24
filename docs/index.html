@@ -1,0 +1,683 @@
+<!DOCTYPE html>
+<html lang="ca">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Configurar OpenCode amb IA - ITIC Barcelona</title>
+  <style>
+    :root {
+      --bg: #0d1117;
+      --surface: #161b22;
+      --border: #30363d;
+      --text: #e6edf3;
+      --text-muted: #8b949e;
+      --accent: #58a6ff;
+      --accent-hover: #79c0ff;
+      --green: #3fb950;
+      --orange: #d29922;
+      --red: #f85149;
+      --purple: #bc8cff;
+      --code-bg: #0d1117;
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.6;
+    }
+
+    .header {
+      background: linear-gradient(135deg, #1a1e2e 0%, #0d1117 100%);
+      border-bottom: 1px solid var(--border);
+      padding: 2.5rem 1rem;
+      text-align: center;
+    }
+
+    .header h1 {
+      font-size: 2.2rem;
+      margin-bottom: 0.5rem;
+      background: linear-gradient(90deg, var(--accent), var(--purple));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .header p {
+      color: var(--text-muted);
+      font-size: 1.1rem;
+    }
+
+    .badge {
+      display: inline-block;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 2rem;
+      padding: 0.25rem 0.75rem;
+      font-size: 0.8rem;
+      color: var(--green);
+      margin-top: 0.75rem;
+    }
+
+    .container {
+      max-width: 860px;
+      margin: 0 auto;
+      padding: 2rem 1.5rem;
+    }
+
+    .toc {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 1.5rem 2rem;
+      margin-bottom: 2.5rem;
+    }
+
+    .toc h2 {
+      font-size: 1rem;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      color: var(--text-muted);
+      margin-bottom: 0.75rem;
+    }
+
+    .toc ol {
+      padding-left: 1.25rem;
+    }
+
+    .toc li {
+      margin-bottom: 0.35rem;
+    }
+
+    .toc a {
+      color: var(--accent);
+      text-decoration: none;
+    }
+
+    .toc a:hover {
+      text-decoration: underline;
+    }
+
+    section {
+      margin-bottom: 2.5rem;
+    }
+
+    h2 {
+      font-size: 1.5rem;
+      margin-bottom: 1rem;
+      padding-bottom: 0.5rem;
+      border-bottom: 1px solid var(--border);
+      color: var(--text);
+    }
+
+    h2 .step {
+      color: var(--accent);
+      margin-right: 0.25rem;
+    }
+
+    h3 {
+      font-size: 1.1rem;
+      margin: 1.25rem 0 0.5rem;
+      color: var(--text);
+    }
+
+    p { margin-bottom: 0.75rem; }
+
+    a { color: var(--accent); }
+    a:hover { color: var(--accent-hover); }
+
+    pre {
+      background: var(--code-bg);
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      padding: 1rem 1.25rem;
+      overflow-x: auto;
+      margin-bottom: 1rem;
+      position: relative;
+    }
+
+    code {
+      font-family: 'SFMono-Regular', 'Cascadia Code', 'Fira Code', Consolas, monospace;
+      font-size: 0.875rem;
+    }
+
+    p code, li code, td code {
+      background: rgba(110, 118, 129, 0.2);
+      padding: 0.15em 0.4em;
+      border-radius: 4px;
+      font-size: 0.85em;
+    }
+
+    .copy-btn {
+      position: absolute;
+      top: 0.5rem;
+      right: 0.5rem;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      color: var(--text-muted);
+      border-radius: 4px;
+      padding: 0.25rem 0.5rem;
+      cursor: pointer;
+      font-size: 0.75rem;
+      transition: all 0.2s;
+    }
+
+    .copy-btn:hover {
+      color: var(--text);
+      border-color: var(--text-muted);
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-bottom: 1rem;
+      font-size: 0.9rem;
+    }
+
+    th, td {
+      text-align: left;
+      padding: 0.6rem 0.75rem;
+      border: 1px solid var(--border);
+    }
+
+    th {
+      background: var(--surface);
+      font-weight: 600;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      font-size: 0.75rem;
+      letter-spacing: 0.04em;
+    }
+
+    tr:nth-child(even) { background: rgba(22, 27, 34, 0.5); }
+
+    .callout {
+      border-radius: 6px;
+      padding: 1rem 1.25rem;
+      margin-bottom: 1rem;
+      border-left: 4px solid;
+    }
+
+    .callout-info {
+      background: rgba(88, 166, 255, 0.08);
+      border-color: var(--accent);
+    }
+
+    .callout-warn {
+      background: rgba(210, 153, 34, 0.08);
+      border-color: var(--orange);
+    }
+
+    .callout-error {
+      background: rgba(248, 81, 73, 0.08);
+      border-color: var(--red);
+    }
+
+    .callout-title {
+      font-weight: 600;
+      margin-bottom: 0.25rem;
+    }
+
+    .callout-info .callout-title { color: var(--accent); }
+    .callout-warn .callout-title { color: var(--orange); }
+    .callout-error .callout-title { color: var(--red); }
+
+    .model-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 1rem 1.25rem;
+      margin-bottom: 0.75rem;
+    }
+
+    .model-card h4 {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      margin-bottom: 0.35rem;
+    }
+
+    .model-tag {
+      display: inline-block;
+      font-size: 0.7rem;
+      padding: 0.1rem 0.5rem;
+      border-radius: 2rem;
+      font-weight: 600;
+    }
+
+    .tag-principal { background: rgba(88, 166, 255, 0.15); color: var(--accent); }
+    .tag-rapid { background: rgba(63, 185, 80, 0.15); color: var(--green); }
+    .tag-codi { background: rgba(188, 140, 255, 0.15); color: var(--purple); }
+    .tag-test { background: rgba(210, 153, 34, 0.15); color: var(--orange); }
+
+    .model-meta {
+      color: var(--text-muted);
+      font-size: 0.85rem;
+    }
+
+    ul, ol { padding-left: 1.5rem; margin-bottom: 0.75rem; }
+    li { margin-bottom: 0.25rem; }
+
+    .os-tabs {
+      display: flex;
+      gap: 0;
+      margin-bottom: 0;
+    }
+
+    .os-tab {
+      padding: 0.5rem 1.25rem;
+      background: transparent;
+      border: 1px solid var(--border);
+      border-bottom: none;
+      color: var(--text-muted);
+      cursor: pointer;
+      font-size: 0.85rem;
+      border-radius: 6px 6px 0 0;
+      transition: all 0.2s;
+    }
+
+    .os-tab.active {
+      background: var(--surface);
+      color: var(--text);
+      border-color: var(--border);
+    }
+
+    .os-content {
+      display: none;
+      border: 1px solid var(--border);
+      border-radius: 0 6px 6px 6px;
+      padding: 1rem 1.25rem;
+      background: var(--surface);
+      margin-bottom: 1rem;
+    }
+
+    .os-content.active { display: block; }
+
+    .footer {
+      border-top: 1px solid var(--border);
+      padding: 2rem 1rem;
+      text-align: center;
+      color: var(--text-muted);
+      font-size: 0.85rem;
+    }
+
+    .footer a { color: var(--accent); text-decoration: none; }
+
+    @media (max-width: 640px) {
+      .header h1 { font-size: 1.5rem; }
+      .container { padding: 1rem; }
+      table { font-size: 0.8rem; }
+      th, td { padding: 0.4rem; }
+    }
+  </style>
+</head>
+<body>
+
+<div class="header">
+  <h1>OpenCode + IA Local</h1>
+  <p>Guia de configuracio per a l'ITIC Barcelona</p>
+  <span class="badge">v1.0 &middot; Marc 2026</span>
+</div>
+
+<div class="container">
+
+  <!-- TOC -->
+  <nav class="toc">
+    <h2>Contingut</h2>
+    <ol>
+      <li><a href="#que-es">Que es OpenCode?</a></li>
+      <li><a href="#requisits">Requisits previs</a></li>
+      <li><a href="#installacio">Installacio</a></li>
+      <li><a href="#models">Models disponibles</a></li>
+      <li><a href="#configuracio">Configuracio</a></li>
+      <li><a href="#verificar">Verificar la configuracio</a></li>
+      <li><a href="#utilitzar">Utilitzar OpenCode</a></li>
+      <li><a href="#comandes">Comandes utils</a></li>
+      <li><a href="#problemes">Resolucio de problemes</a></li>
+      <li><a href="#suport">Suport</a></li>
+    </ol>
+  </nav>
+
+  <!-- Que es OpenCode -->
+  <section id="que-es">
+    <h2><span class="step">1.</span> Que es OpenCode?</h2>
+    <p>OpenCode es una eina CLI (Command Line Interface) de codi obert per a assistencia de programacio amb IA. Funciona de manera similar a altres assistents de codi, pero amb l'avantatge de poder connectar-se a <strong>models locals via Ollama</strong> o a diversos proveidors cloud.</p>
+    <h3>Caracteristiques principals</h3>
+    <ul>
+      <li>Interficie de terminal interactiva</li>
+      <li>Suport per a multiples proveidors d'IA (Ollama, OpenAI, Anthropic, etc.)</li>
+      <li>Capacitats agentiques (lectura/escriptura de fitxers, execucio de comandes)</li>
+      <li>Integracio amb MCP (Model Context Protocol)</li>
+      <li>Sessions persistents i exportables</li>
+    </ul>
+  </section>
+
+  <!-- Requisits -->
+  <section id="requisits">
+    <h2><span class="step">2.</span> Requisits previs</h2>
+    <ul>
+      <li><strong>Sistema operatiu:</strong> Windows 10/11, macOS o Linux</li>
+      <li><strong>Node.js:</strong> versio 18 o superior</li>
+      <li><strong>Git</strong> (recomanat)</li>
+      <li>Connexio a la <strong>xarxa interna de l'ITIC</strong></li>
+    </ul>
+    <h3>Verificar Node.js</h3>
+    <pre><code>node --version
+# Ha de mostrar v18.x.x o superior</code><button class="copy-btn" onclick="copyCode(this)">Copiar</button></pre>
+  </section>
+
+  <!-- Installacio -->
+  <section id="installacio">
+    <h2><span class="step">3.</span> Installacio d'OpenCode</h2>
+
+    <div class="os-tabs" data-group="install">
+      <button class="os-tab active" onclick="switchTab(this, 'install-win')">Windows</button>
+      <button class="os-tab" onclick="switchTab(this, 'install-unix')">macOS / Linux</button>
+    </div>
+    <div id="install-win" class="os-content active">
+      <p>Obre <strong>PowerShell com a Administrador</strong> i executa:</p>
+      <pre><code># Opcio A: Via npm (recomanat)
+npm install -g opencode
+
+# Opcio B: Installacio directa
+irm https://opencode.ai/install.ps1 | iex</code><button class="copy-btn" onclick="copyCode(this)">Copiar</button></pre>
+    </div>
+    <div id="install-unix" class="os-content">
+      <pre><code># Opcio A: Via npm (recomanat)
+npm install -g opencode
+
+# Opcio B: Installacio directa
+curl -fsSL https://opencode.ai/install.sh | bash</code><button class="copy-btn" onclick="copyCode(this)">Copiar</button></pre>
+    </div>
+
+    <h3>Verificar la installacio</h3>
+    <pre><code>opencode --version
+# Ha de mostrar: 1.2.27 o superior</code><button class="copy-btn" onclick="copyCode(this)">Copiar</button></pre>
+  </section>
+
+  <!-- Models -->
+  <section id="models">
+    <h2><span class="step">4.</span> Models disponibles al servidor</h2>
+    <p>El servidor Ollama de l'ITIC te els seguents models:</p>
+
+    <div class="model-card">
+      <h4>gpt-oss:120b <span class="model-tag tag-principal">Principal</span></h4>
+      <p class="model-meta">116.8B parametres &middot; MXFP4 &middot; ~65 GB &middot; Tasques complexes, RAG, raonament</p>
+    </div>
+
+    <div class="model-card">
+      <h4>qwen3.5:35b <span class="model-tag tag-rapid">Rapid</span></h4>
+      <p class="model-meta">36.0B parametres &middot; Q4_K_M &middot; ~24 GB &middot; Equilibri qualitat/velocitat</p>
+    </div>
+
+    <div class="model-card">
+      <h4>Qwen3-Coder-30B <span class="model-tag tag-codi">Codi</span></h4>
+      <p class="model-meta">30.5B parametres &middot; Q6_K &middot; ~26 GB &middot; Generacio i revisio de codi</p>
+    </div>
+
+    <div class="model-card">
+      <h4>gemma3:270m <span class="model-tag tag-test">Test</span></h4>
+      <p class="model-meta">268M parametres &middot; Q8_0 &middot; ~291 MB &middot; Proves rapides, prototipat</p>
+    </div>
+
+    <div class="callout callout-info">
+      <p class="callout-title">Models futurs</p>
+      <p>Els models disponibles aniran canviant. Per veure els models actuals:</p>
+      <pre style="margin-bottom:0"><code>curl http://192.168.1.22:11434/api/tags</code></pre>
+    </div>
+  </section>
+
+  <!-- Configuracio -->
+  <section id="configuracio">
+    <h2><span class="step">5.</span> Configuracio</h2>
+
+    <h3>Pas 1: Crear el directori</h3>
+    <div class="os-tabs" data-group="dir">
+      <button class="os-tab active" onclick="switchTab(this, 'dir-win')">Windows</button>
+      <button class="os-tab" onclick="switchTab(this, 'dir-unix')">macOS / Linux</button>
+    </div>
+    <div id="dir-win" class="os-content active">
+      <pre><code>New-Item -ItemType Directory -Force -Path "$env:USERPROFILE\.config\opencode"</code><button class="copy-btn" onclick="copyCode(this)">Copiar</button></pre>
+    </div>
+    <div id="dir-unix" class="os-content">
+      <pre><code>mkdir -p ~/.config/opencode</code><button class="copy-btn" onclick="copyCode(this)">Copiar</button></pre>
+    </div>
+
+    <h3>Pas 2: Crear el fitxer de configuracio</h3>
+    <p>Ruta del fitxer:</p>
+    <ul>
+      <li><strong>Windows:</strong> <code>%USERPROFILE%\.config\opencode\opencode.json</code></li>
+      <li><strong>macOS/Linux:</strong> <code>~/.config/opencode/opencode.json</code></li>
+    </ul>
+
+    <p>Contingut del fitxer:</p>
+    <pre><code>{
+  "$schema": "https://opencode.ai/config.json",
+  "provider": {
+    "ollama-itic": {
+      "npm": "@ai-sdk/openai-compatible",
+      "name": "Ollama ITIC Barcelona",
+      "options": {
+        "baseURL": "http://192.168.1.22:11434/v1"
+      },
+      "models": {
+        "gpt-oss:120b": {
+          "name": "GPT-OSS 120B (Principal)",
+          "tools": true
+        },
+        "qwen3.5:35b": {
+          "name": "Qwen 3.5 35B (Rapid)",
+          "tools": true
+        },
+        "danielsheep/Qwen3-Coder-30B-A3B-Instruct-1M-Unsloth:UD-Q6_K_XL": {
+          "name": "Qwen3 Coder 30B",
+          "tools": true
+        },
+        "gemma3:270m": {
+          "name": "Gemma 3 270M (Test)",
+          "tools": true
+        }
+      }
+    }
+  }
+}</code><button class="copy-btn" onclick="copyCode(this)">Copiar</button></pre>
+
+    <h3>Pas 3 (Windows): Crear-lo amb una comanda</h3>
+    <p>Copia i enganxa tot aixo al PowerShell:</p>
+    <pre><code>@'
+{
+  "$schema": "https://opencode.ai/config.json",
+  "provider": {
+    "ollama-itic": {
+      "npm": "@ai-sdk/openai-compatible",
+      "name": "Ollama ITIC Barcelona",
+      "options": {
+        "baseURL": "http://192.168.1.22:11434/v1"
+      },
+      "models": {
+        "gpt-oss:120b": {
+          "name": "GPT-OSS 120B (Principal)",
+          "tools": true
+        },
+        "qwen3.5:35b": {
+          "name": "Qwen 3.5 35B (Rapid)",
+          "tools": true
+        },
+        "danielsheep/Qwen3-Coder-30B-A3B-Instruct-1M-Unsloth:UD-Q6_K_XL": {
+          "name": "Qwen3 Coder 30B",
+          "tools": true
+        },
+        "gemma3:270m": {
+          "name": "Gemma 3 270M (Test)",
+          "tools": true
+        }
+      }
+    }
+  }
+}
+'@ | Out-File -FilePath "$env:USERPROFILE\.config\opencode\opencode.json" -Encoding UTF8</code><button class="copy-btn" onclick="copyCode(this)">Copiar</button></pre>
+
+    <div class="callout callout-warn">
+      <p class="callout-title">Afegir nous models</p>
+      <p>Quan s'afegeixin nous models al servidor, afegeix una entrada dins de <code>"models": { }</code> amb el format:</p>
+      <pre style="margin-bottom:0"><code>"nom-del-model:tag": {
+  "name": "Nom descriptiu",
+  "tools": true
+}</code></pre>
+    </div>
+  </section>
+
+  <!-- Verificar -->
+  <section id="verificar">
+    <h2><span class="step">6.</span> Verificar la configuracio</h2>
+
+    <h3>Comprovar connexio al servidor</h3>
+    <pre><code>curl http://192.168.1.22:11434/api/tags</code><button class="copy-btn" onclick="copyCode(this)">Copiar</button></pre>
+    <p>Ha de retornar una llista JSON amb els models disponibles.</p>
+
+    <h3>Llistar proveidors configurats</h3>
+    <pre><code>opencode providers list</code><button class="copy-btn" onclick="copyCode(this)">Copiar</button></pre>
+    <p>Ha de mostrar <strong>"Ollama ITIC Barcelona"</strong> com a proveidor.</p>
+
+    <h3>Llistar models</h3>
+    <pre><code>opencode models ollama-itic</code><button class="copy-btn" onclick="copyCode(this)">Copiar</button></pre>
+  </section>
+
+  <!-- Utilitzar -->
+  <section id="utilitzar">
+    <h2><span class="step">7.</span> Utilitzar OpenCode</h2>
+
+    <h3>Iniciar amb un model concret</h3>
+    <pre><code># Model principal (120B) - maxima qualitat
+opencode -m ollama-itic/gpt-oss:120b
+
+# Model rapid (35B) - bon equilibri
+opencode -m ollama-itic/qwen3.5:35b
+
+# Model de codi (30B) - especialitzat en programacio
+opencode -m "ollama-itic/danielsheep/Qwen3-Coder-30B-A3B-Instruct-1M-Unsloth:UD-Q6_K_XL"
+
+# Model lleuger (270M) - proves rapides
+opencode -m ollama-itic/gemma3:270m</code><button class="copy-btn" onclick="copyCode(this)">Copiar</button></pre>
+
+    <h3>Altres opcions</h3>
+    <pre><code># Iniciar en un projecte especific
+opencode /ruta/al/teu/projecte
+
+# Continuar l'ultima sessio
+opencode --continue</code><button class="copy-btn" onclick="copyCode(this)">Copiar</button></pre>
+
+    <h3>Exemples de peticions</h3>
+    <ul>
+      <li>"Analitza l'estructura d'aquest projecte"</li>
+      <li>"Crea una funcio per validar emails"</li>
+      <li>"Explica que fa el fitxer main.py"</li>
+      <li>"Afegeix tests unitaris per a utils.py"</li>
+    </ul>
+  </section>
+
+  <!-- Comandes -->
+  <section id="comandes">
+    <h2><span class="step">8.</span> Comandes utils dins d'OpenCode</h2>
+    <table>
+      <thead>
+        <tr><th>Comanda</th><th>Descripcio</th></tr>
+      </thead>
+      <tbody>
+        <tr><td><code>/help</code></td><td>Mostra l'ajuda</td></tr>
+        <tr><td><code>/model</code></td><td>Canvia de model</td></tr>
+        <tr><td><code>/clear</code></td><td>Neteja la conversa</td></tr>
+        <tr><td><code>/save</code></td><td>Guarda la sessio</td></tr>
+        <tr><td><code>/exit</code> o <code>Ctrl+C</code></td><td>Surt d'OpenCode</td></tr>
+      </tbody>
+    </table>
+  </section>
+
+  <!-- Problemes -->
+  <section id="problemes">
+    <h2><span class="step">9.</span> Resolucio de problemes</h2>
+
+    <div class="callout callout-error">
+      <p class="callout-title">Error: "Connection refused"</p>
+      <ul>
+        <li>Verifica que estas connectat a la xarxa interna de l'ITIC</li>
+        <li>Comprova que el servidor esta funcionant: <code>curl http://192.168.1.22:11434</code></li>
+      </ul>
+    </div>
+
+    <div class="callout callout-error">
+      <p class="callout-title">Error: "Model not found"</p>
+      <ul>
+        <li>Llista els models disponibles: <code>curl http://192.168.1.22:11434/api/tags</code></li>
+        <li>Verifica que el nom del model es correcte a la configuracio</li>
+      </ul>
+    </div>
+
+    <div class="callout callout-warn">
+      <p class="callout-title">Les eines (tools) no funcionen</p>
+      <p>El context window del model pot ser massa petit. Si tens acces al servidor:</p>
+      <pre style="margin-bottom:0"><code>ollama run qwen3.5:35b
+>>> /set parameter num_ctx 32768
+>>> /save qwen3.5:35b-32k
+>>> /bye</code></pre>
+    </div>
+
+    <div class="callout callout-info">
+      <p class="callout-title">OpenCode va lent</p>
+      <ul>
+        <li>Utilitza un model mes petit per proves (<code>gemma3:270m</code>)</li>
+        <li>El model de 120B requereix mes temps de processament</li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- Suport -->
+  <section id="suport">
+    <h2><span class="step">10.</span> Suport</h2>
+    <p>Per a dubtes o problemes amb la configuracio:</p>
+    <ul>
+      <li><strong>Xavi Lara Moreno</strong> &mdash; xavi.lara@iticbcn.cat</li>
+      <li><strong>Equip CEIABD</strong> &mdash; Institut TIC de Barcelona</li>
+    </ul>
+    <h3>Recursos</h3>
+    <ul>
+      <li><a href="https://opencode.ai/docs/" target="_blank">Documentacio oficial OpenCode</a></li>
+      <li><a href="https://opencode.ai/docs/providers/" target="_blank">Configuracio de proveidors</a></li>
+      <li><a href="http://192.168.1.22:8080" target="_blank">Open WebUI (interficie web)</a></li>
+    </ul>
+    <p style="margin-top:1rem;color:var(--text-muted);font-size:0.85rem"><em>Aquesta infraestructura es fruit de la collaboracio amb Isard (info@isardvdi.com)</em></p>
+  </section>
+
+</div>
+
+<div class="footer">
+  <p>ITIC Barcelona &middot; Equip IA &middot; 2026</p>
+  <p><a href="https://github.com/ZenidX/IA-ITICBCN">Repositori GitHub</a></p>
+</div>
+
+<script>
+function switchTab(btn, contentId) {
+  const group = btn.parentElement;
+  group.querySelectorAll('.os-tab').forEach(t => t.classList.remove('active'));
+  btn.classList.add('active');
+
+  let sibling = group.nextElementSibling;
+  while (sibling && sibling.classList.contains('os-content')) {
+    sibling.classList.remove('active');
+    sibling = sibling.nextElementSibling;
+  }
+  document.getElementById(contentId).classList.add('active');
+}
+
+function copyCode(btn) {
+  const code = btn.parentElement.querySelector('code').textContent;
+  navigator.clipboard.writeText(code).then(() => {
+    btn.textContent = 'Copiat!';
+    setTimeout(() => btn.textContent = 'Copiar', 1500);
+  });
+}
+</script>
+
+</body>
+</html>
