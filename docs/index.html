@@ -24,7 +24,8 @@
       --surface: var(--white);
       --text: var(--black);
       --text-muted: #5a5a5a;
-      --sidebar-w: 260px;
+      --sidebar-w: 240px;
+      --aside-w: 300px;
     }
 
     * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -93,10 +94,181 @@
       margin-bottom: 1.5rem;
     }
 
-    /* ── Layout: Sidebar + Main ── */
+    /* ── Layout: Sidebar + Main + Aside ── */
     .page-body {
       display: flex;
       min-height: calc(100vh - 200px);
+    }
+
+    /* ── Right aside ── */
+    .aside {
+      width: var(--aside-w);
+      min-width: var(--aside-w);
+      position: sticky;
+      top: 0;
+      height: 100vh;
+      overflow-y: auto;
+      background: var(--grisClaret);
+      padding: 1.5rem 1.25rem;
+      border-left: 3px solid transparent;
+      border-image: linear-gradient(180deg, var(--dam), var(--daw), var(--asix)) 1;
+      scrollbar-width: thin;
+      scrollbar-color: rgba(0,0,0,0.1) transparent;
+    }
+
+    .aside::-webkit-scrollbar { width: 4px; }
+    .aside::-webkit-scrollbar-track { background: transparent; }
+    .aside::-webkit-scrollbar-thumb { background: rgba(0,0,0,0.15); border-radius: 2px; }
+
+    .aside-title {
+      font-size: 0.7rem;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: var(--colorSecundariL);
+      margin-bottom: 0.5rem;
+      font-weight: 600;
+    }
+
+    .aside h3 {
+      font-size: 16px;
+      font-weight: 600;
+      color: var(--activeColor);
+      margin: 1.25rem 0 0.5rem;
+      padding-bottom: 0.3rem;
+      border-bottom: 2px solid var(--daw);
+    }
+
+    .aside h3:first-of-type { margin-top: 0.5rem; }
+
+    .aside p {
+      font-size: 0.82rem;
+      color: var(--text-muted);
+      margin-bottom: 0.5rem;
+      line-height: 1.5;
+    }
+
+    .aside ul {
+      padding-left: 1.1rem;
+      margin-bottom: 0.75rem;
+    }
+
+    .aside li {
+      font-size: 0.8rem;
+      color: var(--text-muted);
+      margin-bottom: 0.2rem;
+    }
+
+    .aside code {
+      font-size: 0.75rem;
+      background: rgba(47, 41, 159, 0.08);
+      padding: 0.1em 0.35em;
+      border-radius: 3px;
+      color: var(--asix);
+    }
+
+    .aside-badge {
+      display: inline-block;
+      font-size: 0.65rem;
+      padding: 0.15rem 0.5rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      margin-right: 0.25rem;
+      margin-bottom: 0.25rem;
+    }
+
+    .aside-badge.b-python { background: rgba(47, 41, 159, 0.12); color: var(--asix); }
+    .aside-badge.b-ia { background: rgba(51, 175, 207, 0.12); color: var(--accent-hover); }
+    .aside-badge.b-ok { background: rgba(48, 239, 188, 0.12); color: #1a9970; }
+
+    .aside-session {
+      background: var(--white);
+      border-radius: 8px;
+      padding: 0.85rem 1rem;
+      margin-bottom: 0.75rem;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.06);
+      border-left: 3px solid var(--daw);
+    }
+
+    .aside-session-title {
+      font-size: 0.85rem;
+      font-weight: 600;
+      color: var(--activeColor);
+      margin-bottom: 0.25rem;
+    }
+
+    .aside-session p {
+      font-size: 0.78rem;
+      margin-bottom: 0.3rem;
+    }
+
+    .aside-flow {
+      display: flex;
+      flex-direction: column;
+      gap: 0;
+      margin: 0.5rem 0;
+    }
+
+    .aside-flow-step {
+      display: flex;
+      align-items: flex-start;
+      gap: 0.5rem;
+      position: relative;
+      padding-bottom: 0.6rem;
+    }
+
+    .aside-flow-step:not(:last-child)::before {
+      content: '';
+      position: absolute;
+      left: 9px;
+      top: 22px;
+      bottom: 0;
+      width: 2px;
+      background: linear-gradient(180deg, var(--daw), var(--dam));
+    }
+
+    .aside-flow-dot {
+      width: 20px;
+      height: 20px;
+      min-width: 20px;
+      border-radius: 50%;
+      background: var(--activeColor);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.6rem;
+      color: var(--white);
+      font-weight: 700;
+      margin-top: 1px;
+    }
+
+    .aside-flow-text {
+      font-size: 0.78rem;
+      color: var(--text-muted);
+      line-height: 1.4;
+    }
+
+    .aside-flow-text strong {
+      color: var(--activeColor);
+      font-size: 0.78rem;
+    }
+
+    .aside-key-table {
+      width: 100%;
+      font-size: 0.75rem;
+      margin: 0.5rem 0;
+    }
+
+    .aside-key-table td {
+      padding: 0.3rem 0.5rem;
+      border: none;
+      border-bottom: 1px solid #e8e8e8;
+    }
+
+    .aside-key-table td:first-child {
+      font-weight: 600;
+      color: var(--activeColor);
+      white-space: nowrap;
     }
 
     /* ── Sidebar ── */
@@ -170,6 +342,29 @@
     .sidebar a.active .nav-num {
       color: var(--dam);
     }
+
+    /* ── Aside toggle (tablet/mobile) ── */
+    .aside-toggle {
+      display: none;
+      position: fixed;
+      bottom: 1.25rem;
+      left: 1.25rem;
+      z-index: 1000;
+      width: 48px;
+      height: 48px;
+      border-radius: 50%;
+      background: var(--daw);
+      border: 2px solid var(--white);
+      color: var(--white);
+      font-size: 1.1rem;
+      cursor: pointer;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+      align-items: center;
+      justify-content: center;
+      transition: all 0.2s;
+    }
+
+    .aside-toggle:hover { background: var(--accent-hover); }
 
     /* ── Mobile sidebar toggle ── */
     .sidebar-toggle {
@@ -458,6 +653,26 @@
     ::selection { background-color: var(--colorSecundariL); color: var(--white); }
 
     /* ── Responsive ── */
+    @media (max-width: 1200px) {
+      .aside {
+        position: fixed;
+        right: -320px;
+        top: 0;
+        z-index: 999;
+        width: 310px;
+        min-width: 310px;
+        transition: right 0.3s ease;
+        box-shadow: none;
+      }
+
+      .aside.open {
+        right: 0;
+        box-shadow: -4px 0 20px rgba(0,0,0,0.3);
+      }
+
+      .aside-toggle { display: flex; }
+    }
+
     @media (max-width: 900px) {
       .sidebar {
         position: fixed;
@@ -476,7 +691,6 @@
       }
 
       .sidebar-toggle { display: flex; }
-
       .sidebar-overlay.open { display: block; }
 
       .main-content { padding: 2rem 1.25rem; }
@@ -809,6 +1023,83 @@ opencode --continue</code><button class="copy-btn" onclick="copyCode(this)">Copi
     </section>
 
   </div>
+
+  <!-- Right aside: Experiencia IA -->
+  <aside class="aside" id="aside">
+    <div class="aside-title">Experiencia amb IA</div>
+
+    <h3>Snake amb Pygame</h3>
+    <p>Sessio real de desenvolupament assistit per IA utilitzant el servidor Ollama de l'ITIC.</p>
+
+    <div>
+      <span class="aside-badge b-python">Python</span>
+      <span class="aside-badge b-ia">Pygame</span>
+      <span class="aside-badge b-ok">Completat</span>
+    </div>
+
+    <h3>Flux de treball</h3>
+    <div class="aside-flow">
+      <div class="aside-flow-step">
+        <div class="aside-flow-dot">1</div>
+        <div class="aside-flow-text"><strong>Inici de sessio</strong><br>L'usuari saluda i l'assistent explora el workspace</div>
+      </div>
+      <div class="aside-flow-step">
+        <div class="aside-flow-dot">2</div>
+        <div class="aside-flow-text"><strong>Solicitud</strong><br>"Eres capaz de hacer un minijuego en pygame?" &rarr; es tria Snake</div>
+      </div>
+      <div class="aside-flow-step">
+        <div class="aside-flow-dot">3</div>
+        <div class="aside-flow-text"><strong>Desenvolupament</strong><br>Codi complet amb classes <code>Snake</code> i <code>Food</code>, OOP</div>
+      </div>
+      <div class="aside-flow-step">
+        <div class="aside-flow-dot">4</div>
+        <div class="aside-flow-text"><strong>Bug detectat</strong><br><code>aleatorizar_posicion()</code> retornava <code>None</code></div>
+      </div>
+      <div class="aside-flow-step">
+        <div class="aside-flow-dot">5</div>
+        <div class="aside-flow-text"><strong>Correccio</strong><br>Fix: canviar <code>self.posicion = (x,y)</code> per <code>return (x,y)</code></div>
+      </div>
+      <div class="aside-flow-step">
+        <div class="aside-flow-dot">6</div>
+        <div class="aside-flow-text"><strong>Execucio</strong><br><code>python snake.py</code> &rarr; joc funcional</div>
+      </div>
+    </div>
+
+    <h3>Estructura del codi</h3>
+    <div class="aside-session">
+      <div class="aside-session-title">Classes implementades</div>
+      <p><code>Snake</code> &mdash; reset, moviment, col&middot;lisions, renderitzat</p>
+      <p><code>Food</code> &mdash; posicio aleatoria, renderitzat</p>
+      <p><code>main()</code> &mdash; bucle principal del joc</p>
+    </div>
+
+    <h3>Configuracio del joc</h3>
+    <table class="aside-key-table">
+      <tr><td>Finestra</td><td>600 x 400 px</td></tr>
+      <tr><td>Quadre</td><td>20 x 20 px</td></tr>
+      <tr><td>Velocitat</td><td>10 FPS</td></tr>
+      <tr><td>Controls</td><td>WASD / Fletxes</td></tr>
+      <tr><td>Reiniciar</td><td>R</td></tr>
+      <tr><td>Sortir</td><td>Q</td></tr>
+    </table>
+
+    <h3>Habilitats demostrades</h3>
+    <ul>
+      <li>Exploracio del workspace</li>
+      <li>Gestio de dependencies</li>
+      <li>Codi OOP complet</li>
+      <li>Deteccio i correccio de bugs</li>
+      <li>Execucio exitosa del joc</li>
+      <li>Documentacio de la sessio</li>
+    </ul>
+
+    <h3>Resultat visual</h3>
+    <div class="aside-session">
+      <p>Fons negre amb serpent verda (cap verd fosc), menjar vermell, puntuacio i pantalla de Game Over.</p>
+      <p style="margin-bottom:0;"><strong style="color:#1a9970;">Data:</strong> 24 marc 2026</p>
+    </div>
+  </aside>
+
 </div>
 
 <!-- Footer -->
@@ -824,6 +1115,8 @@ opencode --continue</code><button class="copy-btn" onclick="copyCode(this)">Copi
 
 <!-- Mobile sidebar toggle -->
 <button class="sidebar-toggle" id="sidebarToggle" aria-label="Obrir menu">&#9776;</button>
+<!-- Aside toggle (tablet/mobile) -->
+<button class="aside-toggle" id="asideToggle" aria-label="Experiencia IA">&#9881;</button>
 
 <script>
 // Tab switching
@@ -863,13 +1156,25 @@ toggle.addEventListener('click', () => {
   overlay.classList.toggle('open');
 });
 
-overlay.addEventListener('click', closeSidebar);
+overlay.addEventListener('click', () => {
+  closeSidebar();
+  closeAside();
+});
 
-// Close sidebar on link click (mobile)
 sidebar.querySelectorAll('a').forEach(a => {
   a.addEventListener('click', () => {
     if (window.innerWidth <= 900) closeSidebar();
   });
+});
+
+// Aside toggle
+const aside = document.getElementById('aside');
+const asideToggle = document.getElementById('asideToggle');
+
+function closeAside() { aside.classList.remove('open'); }
+
+asideToggle.addEventListener('click', () => {
+  aside.classList.toggle('open');
 });
 
 // Active section highlighting on scroll
