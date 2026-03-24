@@ -1,0 +1,85 @@
+Assumpte: Servidor local d'IA ja operatiu - Models LLM disponibles per als vostres projectes
+
+---
+
+Bones, companys!
+
+Us escric per informar-vos que ja tenim el servidor local d'IA operatiu al centre. L'Oriol Jaumà està gestionant la infraestructura, actualitzant els models i millorant el backend, però a dia d'avui ja està disponible per utilitzar-lo als vostres projectes.
+
+Important: El servidor només és accessible des de la xarxa del centre.
+
+
+QUÈ TENIM DISPONIBLE?
+=====================
+
+Interfície web (Open WebUI):
+http://192.168.1.22:8080
+→ Interfície gràfica per xatejar amb els models, amb historial de converses.
+
+API Ollama (per integrar als projectes):
+http://192.168.1.22:11434
+→ Compatible amb l'estàndard OpenAI API. Ideal per n8n, LangChain, RAG, aplicacions pròpies.
+
+
+MODELS DISPONIBLES ACTUALMENT
+=============================
+
+• gpt-oss:120b (116.8B paràmetres, ~65GB)
+  El model principal. Per tasques complexes, RAG avançat i raonament.
+
+• Qwen3-Coder-30B (30.5B paràmetres, ~26GB)
+  Especialitzat en codi. Ideal per generació i revisió de codi, documentació tècnica.
+
+• gemma3:270m (268M paràmetres, ~291MB)
+  Model lleuger. Per proves ràpides i prototipat.
+
+Nota: L'Oriol va afegint i actualitzant models, així que aquesta llista pot anar creixent.
+
+
+COM UTILITZAR-HO?
+=================
+
+1) Via navegador: Accediu a http://192.168.1.22:8080 i ja podeu xatejar.
+
+2) Via API amb Python:
+
+   import requests
+   response = requests.post('http://192.168.1.22:11434/api/generate', json={
+       'model': 'gpt-oss:120b',
+       'prompt': 'El teu prompt aquí',
+       'stream': False
+   })
+   print(response.json()['response'])
+
+3) Compatible amb OpenAI SDK (base_url='http://192.168.1.22:11434/v1')
+
+
+PROJECTES QUE ES PODEN BENEFICIAR
+=================================
+
+• QuimicAI → RAG amb el model de 120B per respostes sobre formulació química
+• AgendaTIC/Kiosk → Processament de dades d'analytics
+• GreenIOT → Anàlisi de sèries temporals i prediccions
+• AirGen/Meteo → Interpretació de dades meteorològiques
+• Kronos → OCR i classificació amb suport LLM
+• Projectes CEIABD → Entrenament i fine-tuning de models NLP
+
+
+RECOMANACIONS
+=============
+
+• Comenceu amb gemma3:270m per provar la connexió
+• Utilitzeu gpt-oss:120b per tasques de producció
+• Qwen3-Coder per projectes amb generació de codi
+
+Per qualsevol dubte tècnic sobre el servidor, podeu contactar amb l'Oriol.
+Si necessiteu ajuda per integrar-ho als vostres projectes, contacteu amb mi.
+
+A tope, equip!
+
+---
+
+Xavi Lara Moreno
+Professor IA i tutor ASIX
+Institut TIC de Barcelona
+xavi.lara@iticbcn.cat

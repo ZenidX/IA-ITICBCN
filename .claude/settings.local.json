@@ -1,0 +1,17 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(ping:*)",
+      "Bash(curl:*)",
+      "Bash(ipconfig:*)",
+      "Bash(findstr:*)",
+      "Bash(dir:*)",
+      "Bash(opencode:*)",
+      "WebSearch",
+      "WebFetch(domain:opencode.ai)",
+      "Bash(powershell -Command:*)",
+      "WebFetch(domain:github.com)",
+      "Bash(gh auth:*)"
+    ]
+  }
+}
