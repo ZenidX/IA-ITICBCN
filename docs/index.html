@@ -4,137 +4,195 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Configurar OpenCode amb IA - ITIC Barcelona</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700;800;900&display=swap" rel="stylesheet">
   <style>
     :root {
-      --bg: #0d1117;
-      --surface: #161b22;
-      --border: #30363d;
-      --text: #e6edf3;
-      --text-muted: #8b949e;
-      --accent: #58a6ff;
-      --accent-hover: #79c0ff;
-      --green: #3fb950;
-      --orange: #d29922;
-      --red: #f85149;
-      --purple: #bc8cff;
-      --code-bg: #0d1117;
+      --daw: #33afcf;
+      --dam: #30efbc;
+      --asix: #2f299f;
+      --colorSecundariL: #9ba1a3;
+      --white: #ffffff;
+      --black: #131313;
+      --grisClaret: #f6f6f6;
+      --activeColor: #12103d;
+      --fontText: 'Poppins', sans-serif;
+
+      /* Functional aliases */
+      --accent: var(--daw);
+      --accent-hover: #227a91;
+      --code-bg: #1a1c2e;
+      --border: #e0e0e0;
+      --surface: var(--white);
+      --text: var(--black);
+      --text-muted: #5a5a5a;
     }
 
     * { margin: 0; padding: 0; box-sizing: border-box; }
 
     body {
-      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, sans-serif;
-      background: var(--bg);
+      font-family: var(--fontText);
+      background: var(--white);
       color: var(--text);
       line-height: 1.6;
     }
 
+    /* ── Separator bar (tricolor ITIC) ── */
+    .separador {
+      width: 100%;
+      height: 7px;
+      background: linear-gradient(150deg, var(--asix) 33%, var(--daw) 66%, var(--dam) 100%);
+    }
+
+    /* ── Header ── */
     .header {
-      background: linear-gradient(135deg, #1a1e2e 0%, #0d1117 100%);
-      border-bottom: 1px solid var(--border);
-      padding: 2.5rem 1rem;
+      position: relative;
+      background-image: linear-gradient(120deg, #227a91b2, #0ca67db2, #2a258eb2);
+      background-size: cover;
+      padding: 4rem 1rem;
       text-align: center;
+      color: var(--grisClaret);
     }
 
     .header h1 {
-      font-size: 2.2rem;
+      font-size: 48px;
+      font-weight: 600;
+      letter-spacing: 2px;
       margin-bottom: 0.5rem;
-      background: linear-gradient(90deg, var(--accent), var(--purple));
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
+      color: var(--white);
     }
 
     .header p {
-      color: var(--text-muted);
-      font-size: 1.1rem;
+      color: rgba(255, 255, 255, 0.85);
+      font-size: 1.15rem;
+      font-weight: 300;
     }
 
     .badge {
       display: inline-block;
-      background: var(--surface);
-      border: 1px solid var(--border);
-      border-radius: 2rem;
-      padding: 0.25rem 0.75rem;
+      background: rgba(255, 255, 255, 0.15);
+      border: 2px solid var(--white);
+      border-radius: 0;
+      padding: 0.3rem 1rem;
       font-size: 0.8rem;
-      color: var(--green);
-      margin-top: 0.75rem;
+      color: var(--white);
+      margin-top: 1.25rem;
+      font-weight: 600;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      transition: all ease-in-out 0.2s;
     }
 
+    .badge:hover {
+      background: var(--activeColor);
+      border-color: var(--activeColor);
+    }
+
+    /* ── Cycle squares (header) ── */
+    .cycle-squares {
+      display: flex;
+      justify-content: center;
+      gap: 20px;
+      margin-top: 2rem;
+    }
+
+    .cycle-sq {
+      width: 80px;
+      height: 80px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      color: var(--white);
+      font-size: 11px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+
+    .cycle-sq.sq-daw { background: var(--daw); }
+    .cycle-sq.sq-dam { background: var(--dam); color: var(--black); }
+    .cycle-sq.sq-asix { background: var(--asix); }
+
+    /* ── Container ── */
     .container {
       max-width: 860px;
       margin: 0 auto;
-      padding: 2rem 1.5rem;
+      padding: 2.5rem 1.5rem;
     }
 
+    /* ── TOC ── */
     .toc {
-      background: var(--surface);
-      border: 1px solid var(--border);
+      background: var(--grisClaret);
       border-radius: 8px;
       padding: 1.5rem 2rem;
       margin-bottom: 2.5rem;
+      box-shadow: 0px 3px 8px rgba(0, 0, 0, 0.08);
     }
 
     .toc h2 {
-      font-size: 1rem;
+      font-size: 0.85rem;
       text-transform: uppercase;
       letter-spacing: 0.05em;
-      color: var(--text-muted);
+      color: var(--colorSecundariL);
       margin-bottom: 0.75rem;
+      font-weight: 600;
+      border-bottom: none;
+      padding-bottom: 0;
     }
 
-    .toc ol {
-      padding-left: 1.25rem;
-    }
+    .toc ol { padding-left: 1.25rem; }
+    .toc li { margin-bottom: 0.35rem; }
+    .toc a { color: var(--asix); text-decoration: none; }
+    .toc a:hover { color: var(--daw); text-decoration: underline; }
 
-    .toc li {
-      margin-bottom: 0.35rem;
-    }
-
-    .toc a {
-      color: var(--accent);
-      text-decoration: none;
-    }
-
-    .toc a:hover {
-      text-decoration: underline;
-    }
-
-    section {
-      margin-bottom: 2.5rem;
-    }
+    /* ── Headings ── */
+    section { margin-bottom: 2.5rem; }
 
     h2 {
-      font-size: 1.5rem;
+      font-size: 30px;
+      font-weight: 600;
       margin-bottom: 1rem;
       padding-bottom: 0.5rem;
-      border-bottom: 1px solid var(--border);
-      color: var(--text);
+      border-bottom: 3px solid transparent;
+      border-image: linear-gradient(90deg, var(--asix), var(--daw), var(--dam)) 1;
+      color: var(--activeColor);
+      letter-spacing: 1px;
     }
 
     h2 .step {
-      color: var(--accent);
+      color: var(--daw);
       margin-right: 0.25rem;
     }
 
     h3 {
-      font-size: 1.1rem;
+      font-size: 19px;
+      font-weight: 500;
       margin: 1.25rem 0 0.5rem;
-      color: var(--text);
+      color: var(--activeColor);
     }
 
     p { margin-bottom: 0.75rem; }
 
-    a { color: var(--accent); }
-    a:hover { color: var(--accent-hover); }
+    a { color: var(--accent-hover); }
+    a:hover { color: var(--colorSecundariL); }
 
+    strong { color: var(--activeColor); }
+
+    /* ── Code blocks ── */
     pre {
       background: var(--code-bg);
-      border: 1px solid var(--border);
-      border-radius: 6px;
+      border: none;
+      border-radius: 8px;
       padding: 1rem 1.25rem;
       overflow-x: auto;
       margin-bottom: 1rem;
       position: relative;
+      box-shadow: 0px 3px 8px rgba(0, 0, 0, 0.12);
+      border-left: 4px solid var(--asix);
+    }
+
+    pre code {
+      color: #e6edf3;
     }
 
     code {
@@ -143,113 +201,145 @@
     }
 
     p code, li code, td code {
-      background: rgba(110, 118, 129, 0.2);
+      background: rgba(47, 41, 159, 0.08);
       padding: 0.15em 0.4em;
       border-radius: 4px;
       font-size: 0.85em;
+      color: var(--asix);
     }
 
     .copy-btn {
       position: absolute;
       top: 0.5rem;
       right: 0.5rem;
-      background: var(--surface);
-      border: 1px solid var(--border);
-      color: var(--text-muted);
+      background: rgba(255, 255, 255, 0.1);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      color: rgba(255, 255, 255, 0.6);
       border-radius: 4px;
       padding: 0.25rem 0.5rem;
       cursor: pointer;
       font-size: 0.75rem;
+      font-family: var(--fontText);
       transition: all 0.2s;
     }
 
     .copy-btn:hover {
-      color: var(--text);
-      border-color: var(--text-muted);
+      color: var(--white);
+      background: rgba(255, 255, 255, 0.2);
+      border-color: rgba(255, 255, 255, 0.4);
     }
 
+    /* ── Tables ── */
     table {
       width: 100%;
       border-collapse: collapse;
       margin-bottom: 1rem;
-      font-size: 0.9rem;
+      font-size: 14px;
+      background: var(--white);
+      border-radius: 8px;
+      overflow: hidden;
+      box-shadow: 0px 3px 8px rgba(0, 0, 0, 0.08);
     }
 
     th, td {
       text-align: left;
-      padding: 0.6rem 0.75rem;
-      border: 1px solid var(--border);
+      padding: 10px 12px;
+      border-bottom: 1px solid #ddd;
+      border-right: 1px solid #ddd;
     }
 
+    th:last-child, td:last-child { border-right: none; }
+
     th {
-      background: var(--surface);
+      background: #2a258ed1;
+      color: var(--white);
       font-weight: 600;
-      color: var(--text-muted);
       text-transform: uppercase;
       font-size: 0.75rem;
       letter-spacing: 0.04em;
     }
 
-    tr:nth-child(even) { background: rgba(22, 27, 34, 0.5); }
+    tr:nth-child(even) { background: #f1faff; }
 
+    /* ── Callouts ── */
     .callout {
-      border-radius: 6px;
+      border-radius: 8px;
       padding: 1rem 1.25rem;
       margin-bottom: 1rem;
       border-left: 4px solid;
+      box-shadow: 0px 3px 8px rgba(0, 0, 0, 0.06);
     }
 
     .callout-info {
-      background: rgba(88, 166, 255, 0.08);
-      border-color: var(--accent);
+      background: rgba(51, 175, 207, 0.06);
+      border-color: var(--daw);
     }
 
     .callout-warn {
-      background: rgba(210, 153, 34, 0.08);
-      border-color: var(--orange);
+      background: rgba(48, 239, 188, 0.06);
+      border-color: var(--dam);
     }
 
     .callout-error {
-      background: rgba(248, 81, 73, 0.08);
-      border-color: var(--red);
+      background: rgba(47, 41, 159, 0.06);
+      border-color: var(--asix);
     }
 
-    .callout-title {
-      font-weight: 600;
-      margin-bottom: 0.25rem;
-    }
+    .callout-title { font-weight: 600; margin-bottom: 0.25rem; }
+    .callout-info .callout-title { color: var(--daw); }
+    .callout-warn .callout-title { color: #1a9970; }
+    .callout-error .callout-title { color: var(--asix); }
 
-    .callout-info .callout-title { color: var(--accent); }
-    .callout-warn .callout-title { color: var(--orange); }
-    .callout-error .callout-title { color: var(--red); }
-
+    /* ── Model cards ── */
     .model-card {
-      background: var(--surface);
-      border: 1px solid var(--border);
+      background: var(--white);
+      border: 1px solid #e8e8e8;
       border-radius: 8px;
       padding: 1rem 1.25rem;
       margin-bottom: 0.75rem;
+      box-shadow: 0px 3px 8px rgba(0, 0, 0, 0.06);
+      transition: all 0.2s;
+      border-left: 4px solid transparent;
     }
+
+    .model-card:hover {
+      box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.1);
+      transform: translateY(-1px);
+    }
+
+    .model-card:nth-child(1) { border-left-color: var(--asix); }
+    .model-card:nth-child(2) { border-left-color: var(--daw); }
+    .model-card:nth-child(3) { border-left-color: var(--dam); }
+    .model-card:nth-child(4) { border-left-color: var(--colorSecundariL); }
 
     .model-card h4 {
       display: flex;
       align-items: center;
       gap: 0.5rem;
       margin-bottom: 0.35rem;
+      font-weight: 600;
+      color: var(--activeColor);
+      font-size: 1rem;
+      background: none;
+      text-align: left;
+      padding: 0;
+      width: auto;
     }
 
     .model-tag {
       display: inline-block;
       font-size: 0.7rem;
-      padding: 0.1rem 0.5rem;
-      border-radius: 2rem;
+      padding: 0.15rem 0.6rem;
+      border-radius: 0;
       font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
     }
 
-    .tag-principal { background: rgba(88, 166, 255, 0.15); color: var(--accent); }
-    .tag-rapid { background: rgba(63, 185, 80, 0.15); color: var(--green); }
-    .tag-codi { background: rgba(188, 140, 255, 0.15); color: var(--purple); }
-    .tag-test { background: rgba(210, 153, 34, 0.15); color: var(--orange); }
+    .tag-principal { background: var(--asix); color: var(--white); }
+    .tag-rapid { background: var(--daw); color: var(--white); }
+    .tag-codi { background: var(--dam); color: var(--black); }
+    .tag-test { background: var(--colorSecundariL); color: var(--white); }
 
     .model-meta {
       color: var(--text-muted);
@@ -259,6 +349,7 @@
     ul, ol { padding-left: 1.5rem; margin-bottom: 0.75rem; }
     li { margin-bottom: 0.25rem; }
 
+    /* ── OS Tabs ── */
     .os-tabs {
       display: flex;
       gap: 0;
@@ -268,57 +359,118 @@
     .os-tab {
       padding: 0.5rem 1.25rem;
       background: transparent;
-      border: 1px solid var(--border);
-      border-bottom: none;
-      color: var(--text-muted);
+      border: none;
+      border-bottom: 3px solid transparent;
+      color: var(--colorSecundariL);
       cursor: pointer;
       font-size: 0.85rem;
-      border-radius: 6px 6px 0 0;
+      font-family: var(--fontText);
+      font-weight: 500;
       transition: all 0.2s;
     }
 
     .os-tab.active {
-      background: var(--surface);
+      color: var(--activeColor);
+      border-bottom-color: var(--daw);
+    }
+
+    .os-tab:hover:not(.active) {
       color: var(--text);
-      border-color: var(--border);
+      border-bottom-color: var(--colorSecundariL);
     }
 
     .os-content {
       display: none;
-      border: 1px solid var(--border);
-      border-radius: 0 6px 6px 6px;
+      border: 1px solid #e8e8e8;
+      border-radius: 0 0 8px 8px;
       padding: 1rem 1.25rem;
-      background: var(--surface);
+      background: var(--grisClaret);
       margin-bottom: 1rem;
     }
 
     .os-content.active { display: block; }
 
+    /* ── Footer ── */
+    .footer-sep {
+      width: 100%;
+      height: 7px;
+      background: linear-gradient(150deg, var(--asix) 33%, var(--daw) 66%, var(--dam) 100%);
+    }
+
     .footer {
-      border-top: 1px solid var(--border);
-      padding: 2rem 1rem;
+      background: #252525;
+      padding: 2.5rem 1rem;
       text-align: center;
-      color: var(--text-muted);
+      color: rgba(255, 255, 255, 0.7);
       font-size: 0.85rem;
     }
 
-    .footer a { color: var(--accent); text-decoration: none; }
+    .footer a {
+      color: var(--white);
+      text-decoration: none;
+      transition: 1s;
+    }
 
+    .footer a:hover {
+      text-decoration: line-through;
+      color: var(--white);
+    }
+
+    .footer-bottom {
+      background: #1c1c1a;
+      padding: 1rem;
+      text-align: center;
+      color: rgba(255, 255, 255, 0.4);
+      font-size: 0.75rem;
+    }
+
+    .footer-bottom a {
+      color: rgba(255, 255, 255, 0.6);
+      text-decoration: none;
+    }
+
+    .footer-bottom a:hover {
+      color: var(--white);
+      text-decoration: none;
+    }
+
+    /* ── Selection ── */
+    ::selection {
+      background-color: var(--colorSecundariL);
+      color: var(--white);
+    }
+
+    /* ── Responsive ── */
     @media (max-width: 640px) {
-      .header h1 { font-size: 1.5rem; }
-      .container { padding: 1rem; }
+      .header h1 { font-size: 32px; }
+      .container { padding: 1.5rem 1rem; }
       table { font-size: 0.8rem; }
       th, td { padding: 0.4rem; }
+      .cycle-squares { gap: 10px; }
+      .cycle-sq { width: 60px; height: 60px; font-size: 9px; }
+      h2 { font-size: 24px; }
     }
   </style>
 </head>
 <body>
 
+<!-- Separator bar -->
+<div class="separador"></div>
+
+<!-- Header -->
 <div class="header">
   <h1>OpenCode + IA Local</h1>
   <p>Guia de configuracio per a l'ITIC Barcelona</p>
+  <div class="cycle-squares">
+    <div class="cycle-sq sq-asix">ASIX</div>
+    <div class="cycle-sq sq-daw">DAW</div>
+    <div class="cycle-sq sq-dam">DAM</div>
+  </div>
   <span class="badge">v1.0 &middot; Marc 2026</span>
 </div>
+
+<!-- Separator bar -->
+<div class="separador"></div>
 
 <div class="container">
 
@@ -651,9 +803,14 @@ opencode --continue</code><button class="copy-btn" onclick="copyCode(this)">Copi
 
 </div>
 
+<!-- Footer -->
+<div class="footer-sep"></div>
 <div class="footer">
-  <p>ITIC Barcelona &middot; Equip IA &middot; 2026</p>
-  <p><a href="https://github.com/ZenidX/IA-ITICBCN">Repositori GitHub</a></p>
+  <p><strong style="color: var(--white);">ITIC Barcelona</strong> &middot; Equip IA &middot; 2026</p>
+  <p style="margin-top: 0.5rem;"><a href="https://github.com/ZenidX/IA-ITICBCN">Repositori GitHub</a></p>
+</div>
+<div class="footer-bottom">
+  <p>Institut TIC de Barcelona &middot; <a href="https://agora.xtec.cat/iticbcn/">agora.xtec.cat/iticbcn</a></p>
 </div>
 
 <script>
