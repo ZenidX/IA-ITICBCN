@@ -573,10 +573,11 @@
 <!-- Header -->
 <div class="header">
   <img src="img/logo.png" alt="ITIC Barcelona" class="header-logo">
-  <h1>OpenCode + IA ITICBCN</h1>
-  <p>Guia de configuraci&oacute; per a l'Institut TIC de Barcelona</p>
+  <h1>IA ITICBCN</h1>
+  <p>Recursos d'intel&middot;lig&egrave;ncia artificial per a l'Institut TIC de Barcelona</p>
   <div class="guide-tabs">
-    <button class="guide-tab active" data-guide="opencode">OpenCode</button>
+    <button class="guide-tab active" data-guide="servidor">Servidor Ollama</button>
+    <button class="guide-tab" data-guide="opencode">OpenCode</button>
     <!-- <button class="guide-tab coming-soon" data-guide="claudecode">Claude Code</button> -->
     <!-- <button class="guide-tab coming-soon" data-guide="altres">Altres assistents</button> -->
   </div>
@@ -589,8 +590,24 @@
 
   <!-- Sidebar -->
   <nav class="sidebar" id="sidebar">
+    <!-- Servidor Ollama sidebar -->
+    <div class="sidebar-panel active" data-guide="servidor">
+      <div class="sidebar-title">Contingut</div>
+      <ol>
+        <li><a href="#srv-intro" data-section="srv-intro"><span class="nav-num">1.</span> Qu&egrave; &eacute;s el servidor?</a></li>
+        <li><a href="#srv-webui" data-section="srv-webui"><span class="nav-num">2.</span> Interf&iacute;cie web</a></li>
+        <li><a href="#srv-models" data-section="srv-models"><span class="nav-num">3.</span> Models disponibles</a></li>
+        <li><a href="#srv-api" data-section="srv-api"><span class="nav-num">4.</span> API Ollama</a></li>
+        <li><a href="#srv-curl" data-section="srv-curl"><span class="nav-num">5.</span> Exemple cURL</a></li>
+        <li><a href="#srv-python" data-section="srv-python"><span class="nav-num">6.</span> Exemple Python</a></li>
+        <li><a href="#srv-openai" data-section="srv-openai"><span class="nav-num">7.</span> OpenAI SDK</a></li>
+        <li><a href="#srv-projectes" data-section="srv-projectes"><span class="nav-num">8.</span> Projectes</a></li>
+        <li><a href="#srv-recomanacions" data-section="srv-recomanacions"><span class="nav-num">9.</span> Recomanacions</a></li>
+        <li><a href="#srv-suport" data-section="srv-suport"><span class="nav-num">10.</span> Suport</a></li>
+      </ol>
+    </div>
     <!-- OpenCode sidebar -->
-    <div class="sidebar-panel" data-guide="opencode">
+    <div class="sidebar-panel" data-guide="opencode" style="display:none">
       <div class="sidebar-title">Contingut</div>
       <ol>
         <li><a href="#que-es" data-section="que-es"><span class="nav-num">1.</span> Qu&egrave; &eacute;s OpenCode?</a></li>
@@ -624,9 +641,264 @@
   <div class="sidebar-overlay" id="sidebarOverlay"></div>
 
   <!-- ═══════════════════════════════════════ -->
+  <!-- GUIDE: Servidor Ollama                 -->
+  <!-- ═══════════════════════════════════════ -->
+  <div class="guide-panel active" data-guide="servidor">
+
+    <div class="main-content">
+
+      <section id="srv-intro">
+        <h2><span class="step">1.</span> Qu&egrave; &eacute;s el servidor d'IA?</h2>
+        <p>L'Institut TIC de Barcelona disposa d'un <strong>servidor d'IA amb Ollama</strong>, accessible des de la xarxa interna del centre. Permet executar models de llenguatge grans (LLM) de forma local, sense dependre de serveis al n&uacute;vol ni enviar dades fora del centre.</p>
+        <h3>Qu&egrave; ofereix?</h3>
+        <ul>
+          <li><strong>Interf&iacute;cie gr&agrave;fica web</strong> per xatejar amb els models (Open WebUI)</li>
+          <li><strong>API REST</strong> compatible amb l'est&agrave;ndard OpenAI per integrar en projectes</li>
+          <li><strong>M&uacute;ltiples models</strong> de diferents mides i especialitzacions</li>
+          <li>Compatible amb <strong>n8n, LangChain, aplicacions pr&ograve;pies, RAG pipelines</strong> i m&eacute;s</li>
+        </ul>
+        <div class="callout callout-info">
+          <p class="callout-title">Requisit</p>
+          <p>Cal estar connectat a la <strong>xarxa interna de l'ITIC</strong> per accedir al servidor.</p>
+        </div>
+      </section>
+
+      <section id="srv-webui">
+        <h2><span class="step">2.</span> Interf&iacute;cie gr&agrave;fica: Open WebUI</h2>
+        <p>La manera m&eacute;s f&agrave;cil de comen&ccedil;ar &eacute;s la interf&iacute;cie web. Simplement obre el navegador i accedeix a:</p>
+        <pre><code>http://192.168.1.22:8080</code><button class="copy-btn" onclick="copyCode(this)">Copiar</button></pre>
+        <h3>Funcionalitats</h3>
+        <ul>
+          <li>Interf&iacute;cie intu&iuml;tiva estil ChatGPT</li>
+          <li>Selecci&oacute; de model des del men&uacute; desplegable</li>
+          <li>Historial de converses</li>
+          <li>Gesti&oacute; de models</li>
+          <li>Suport per a m&uacute;ltiples usuaris</li>
+        </ul>
+      </section>
+
+      <section id="srv-models">
+        <h2><span class="step">3.</span> Models disponibles</h2>
+        <div class="model-card">
+          <h4>gpt-oss:120b <span class="model-tag tag-principal">Principal</span></h4>
+          <p class="model-meta">116.8B par&agrave;metres &middot; MXFP4 &middot; ~65 GB &middot; Tasques complexes, RAG avan&ccedil;at, raonament</p>
+        </div>
+        <div class="model-card">
+          <h4>qwen3.5:35b <span class="model-tag tag-rapid">R&agrave;pid</span></h4>
+          <p class="model-meta">36.0B par&agrave;metres &middot; Q4_K_M &middot; ~24 GB &middot; Equilibri qualitat/velocitat, &uacute;s general</p>
+        </div>
+        <div class="model-card">
+          <h4>Qwen3-Coder-30B <span class="model-tag tag-codi">Codi</span></h4>
+          <p class="model-meta">30.5B par&agrave;metres &middot; Q6_K &middot; ~26 GB &middot; Generaci&oacute; i revisi&oacute; de codi, documentaci&oacute; t&egrave;cnica</p>
+        </div>
+        <div class="model-card">
+          <h4>gemma3:270m <span class="model-tag tag-test">Test</span></h4>
+          <p class="model-meta">268M par&agrave;metres &middot; Q8_0 &middot; ~291 MB &middot; Proves r&agrave;pides, prototipat</p>
+        </div>
+        <div class="callout callout-info">
+          <p class="callout-title">Llistar models actualitzats</p>
+          <p>Els models poden canviar. Per veure els disponibles en temps real:</p>
+          <pre style="margin-bottom:0"><code>curl http://192.168.1.22:11434/api/tags</code></pre>
+        </div>
+      </section>
+
+      <section id="srv-api">
+        <h2><span class="step">4.</span> API Ollama</h2>
+        <p>L'API REST d'Ollama permet integrar els models als vostres projectes. L'endpoint base &eacute;s:</p>
+        <pre><code>http://192.168.1.22:11434</code><button class="copy-btn" onclick="copyCode(this)">Copiar</button></pre>
+        <h3>Endpoints principals</h3>
+        <table>
+          <thead>
+            <tr><th>Endpoint</th><th>M&egrave;tode</th><th>Descripci&oacute;</th></tr>
+          </thead>
+          <tbody>
+            <tr><td><code>/api/generate</code></td><td>POST</td><td>Generar text amb un model</td></tr>
+            <tr><td><code>/api/chat</code></td><td>POST</td><td>Conversa multi-torn (amb historial)</td></tr>
+            <tr><td><code>/api/tags</code></td><td>GET</td><td>Llistar models disponibles</td></tr>
+            <tr><td><code>/v1/chat/completions</code></td><td>POST</td><td>Endpoint compatible amb OpenAI</td></tr>
+          </tbody>
+        </table>
+      </section>
+
+      <section id="srv-curl">
+        <h2><span class="step">5.</span> Exemple amb cURL</h2>
+        <h3>Generaci&oacute; simple</h3>
+        <pre><code>curl http://192.168.1.22:11434/api/generate -d '{
+  "model": "gpt-oss:120b",
+  "prompt": "Explica la formulaci&oacute; del sulfat de coure",
+  "stream": false
+}'</code><button class="copy-btn" onclick="copyCode(this)">Copiar</button></pre>
+        <h3>Conversa amb historial</h3>
+        <pre><code>curl http://192.168.1.22:11434/api/chat -d '{
+  "model": "qwen3.5:35b",
+  "messages": [
+    {"role": "user", "content": "Hola, qu&egrave; pots fer?"}
+  ],
+  "stream": false
+}'</code><button class="copy-btn" onclick="copyCode(this)">Copiar</button></pre>
+      </section>
+
+      <section id="srv-python">
+        <h2><span class="step">6.</span> Exemple amb Python</h2>
+        <h3>Amb la llibreria requests</h3>
+        <pre><code>import requests
+
+response = requests.post(
+    'http://192.168.1.22:11434/api/generate',
+    json={
+        'model': 'gpt-oss:120b',
+        'prompt': 'El teu prompt aqu&iacute;',
+        'stream': False
+    }
+)
+print(response.json()['response'])</code><button class="copy-btn" onclick="copyCode(this)">Copiar</button></pre>
+        <div class="callout callout-warn">
+          <p class="callout-title">Instal&middot;laci&oacute;</p>
+          <p>Si no tens la llibreria requests: <code>pip install requests</code></p>
+        </div>
+      </section>
+
+      <section id="srv-openai">
+        <h2><span class="step">7.</span> Compatible amb OpenAI SDK</h2>
+        <p>Ollama exposa un endpoint <strong>compatible amb l'API d'OpenAI</strong>, cosa que permet reutilitzar codi existent o llibreries que ja hi funcionen.</p>
+        <pre><code>from openai import OpenAI
+
+client = OpenAI(
+    base_url='http://192.168.1.22:11434/v1',
+    api_key='ollama'  # Ollama no requereix API key real
+)
+
+response = client.chat.completions.create(
+    model='gpt-oss:120b',
+    messages=[{'role': 'user', 'content': 'Hola!'}]
+)
+print(response.choices[0].message.content)</code><button class="copy-btn" onclick="copyCode(this)">Copiar</button></pre>
+        <div class="callout callout-warn">
+          <p class="callout-title">Instal&middot;laci&oacute;</p>
+          <p>Cal tenir l'SDK: <code>pip install openai</code></p>
+        </div>
+      </section>
+
+      <section id="srv-projectes">
+        <h2><span class="step">8.</span> Projectes que se'n beneficien</h2>
+        <table>
+          <thead>
+            <tr><th>Projecte</th><th>Aplicaci&oacute; del servidor</th></tr>
+          </thead>
+          <tbody>
+            <tr><td><strong>QuimicAI</strong></td><td>RAG amb el model de 120B per a respostes de formulaci&oacute; qu&iacute;mica</td></tr>
+            <tr><td><strong>AgendaTIC / Kiosk</strong></td><td>Processament de dades d'analytics amb LLM</td></tr>
+            <tr><td><strong>GreenIOT</strong></td><td>An&agrave;lisi de s&egrave;ries temporals i prediccions</td></tr>
+            <tr><td><strong>AirGen / Meteo</strong></td><td>Interpretaci&oacute; de dades meteorol&ograve;giques</td></tr>
+            <tr><td><strong>Kronos</strong></td><td>OCR i classificaci&oacute; amb suport de LLM</td></tr>
+          </tbody>
+        </table>
+      </section>
+
+      <section id="srv-recomanacions">
+        <h2><span class="step">9.</span> Recomanacions d'&uacute;s</h2>
+        <div class="callout callout-info">
+          <p class="callout-title">Per comen&ccedil;ar</p>
+          <p>Utilitzeu <code>gemma3:270m</code> per fer proves r&agrave;pides i validar la connexi&oacute;. &Eacute;s molt lleuger.</p>
+        </div>
+        <div class="callout callout-warn">
+          <p class="callout-title">Per a producci&oacute;</p>
+          <p>Utilitzeu <code>gpt-oss:120b</code> per a tasques que requereixin m&agrave;xima qualitat i raonament avan&ccedil;at.</p>
+        </div>
+        <div class="callout callout-error">
+          <p class="callout-title">Per a codi</p>
+          <p><code>Qwen3-Coder-30B</code> &eacute;s ideal per a projectes de generaci&oacute; i revisi&oacute; de codi.</p>
+        </div>
+      </section>
+
+      <section id="srv-suport">
+        <h2><span class="step">10.</span> Suport</h2>
+        <p>Per a dubtes o problemes amb el servidor:</p>
+        <ul>
+          <li><strong>Oriol Jaum&agrave; Lara</strong> &mdash; oriol.jauma@iticbcn.cat</li>
+          <li><strong>Xavi Lara Moreno</strong> &mdash; xavi.lara@iticbcn.cat</li>
+        </ul>
+        <h3>Adreces r&agrave;pides</h3>
+        <table>
+          <thead>
+            <tr><th>Servei</th><th>URL</th></tr>
+          </thead>
+          <tbody>
+            <tr><td><strong>Open WebUI</strong></td><td><code>http://192.168.1.22:8080</code></td></tr>
+            <tr><td><strong>API Ollama</strong></td><td><code>http://192.168.1.22:11434</code></td></tr>
+            <tr><td><strong>API compatible OpenAI</strong></td><td><code>http://192.168.1.22:11434/v1</code></td></tr>
+          </tbody>
+        </table>
+      </section>
+
+    </div>
+
+    <!-- Aside: Connexions del servidor -->
+    <aside class="aside" id="aside-servidor">
+      <div class="aside-title">Connexi&oacute; r&agrave;pida</div>
+
+      <h3>Acc&eacute;s directe</h3>
+      <div class="aside-session">
+        <div class="aside-session-title">Open WebUI</div>
+        <p>Interf&iacute;cie web per xatejar amb els models.</p>
+        <p><code>http://192.168.1.22:8080</code></p>
+      </div>
+      <div class="aside-session">
+        <div class="aside-session-title">API REST</div>
+        <p>Endpoint per a integracions.</p>
+        <p><code>http://192.168.1.22:11434</code></p>
+      </div>
+      <div class="aside-session">
+        <div class="aside-session-title">API OpenAI compatible</div>
+        <p>Per a llibreries que usen l'SDK d'OpenAI.</p>
+        <p><code>http://192.168.1.22:11434/v1</code></p>
+      </div>
+
+      <h3>Comprova la connexi&oacute;</h3>
+      <div class="aside-session">
+        <div class="aside-session-title">Test r&agrave;pid</div>
+        <p>Obre un terminal i executa:</p>
+        <pre style="margin:0.5rem 0;border-left-color:var(--daw)"><code>curl http://192.168.1.22:11434</code></pre>
+        <p>Si respon <code>Ollama is running</code>, tot funciona.</p>
+      </div>
+
+      <h3>Models recomanats</h3>
+      <div class="aside-flow">
+        <div class="aside-flow-step">
+          <div class="aside-flow-dot" style="background:var(--asix);">1</div>
+          <div class="aside-flow-text"><strong>Proves</strong><br><code>gemma3:270m</code> &mdash; r&agrave;pid, lleuger</div>
+        </div>
+        <div class="aside-flow-step">
+          <div class="aside-flow-dot" style="background:var(--daw);">2</div>
+          <div class="aside-flow-text"><strong>&Uacute;s general</strong><br><code>qwen3.5:35b</code> &mdash; bon equilibri</div>
+        </div>
+        <div class="aside-flow-step">
+          <div class="aside-flow-dot" style="background:var(--dam);">3</div>
+          <div class="aside-flow-text"><strong>Codi</strong><br><code>Qwen3-Coder-30B</code> &mdash; especialitzat</div>
+        </div>
+        <div class="aside-flow-step">
+          <div class="aside-flow-dot" style="background:var(--activeColor);">4</div>
+          <div class="aside-flow-text"><strong>M&agrave;xima qualitat</strong><br><code>gpt-oss:120b</code> &mdash; el m&eacute;s potent</div>
+        </div>
+      </div>
+
+      <h3>Compatibilitats</h3>
+      <ul>
+        <li>n8n</li>
+        <li>LangChain / LlamaIndex</li>
+        <li>OpenAI SDK (Python, Node.js)</li>
+        <li>Aplicacions pr&ograve;pies</li>
+        <li>RAG pipelines</li>
+        <li>OpenCode / Claude Code</li>
+      </ul>
+    </aside>
+
+  </div>
+
+  <!-- ═══════════════════════════════════════ -->
   <!-- GUIDE: OpenCode                        -->
   <!-- ═══════════════════════════════════════ -->
-  <div class="guide-panel active" data-guide="opencode">
+  <div class="guide-panel" data-guide="opencode">
 
     <div class="main-content">
 
@@ -1058,10 +1330,13 @@ function copyCode(btn) {
 }
 
 // Guide tabs (header)
+let activeGuide = 'servidor';
+
 document.querySelectorAll('.guide-tab').forEach(tab => {
   tab.addEventListener('click', function() {
     if (this.classList.contains('coming-soon')) return;
     const guide = this.dataset.guide;
+    activeGuide = guide;
 
     // Tabs
     document.querySelectorAll('.guide-tab').forEach(t => t.classList.remove('active'));
@@ -1076,6 +1351,10 @@ document.querySelectorAll('.guide-tab').forEach(tab => {
     document.querySelectorAll('.sidebar-panel').forEach(p => p.style.display = 'none');
     const sp = document.querySelector('.sidebar-panel[data-guide="' + guide + '"]');
     if (sp) sp.style.display = '';
+
+    // Scroll to top
+    window.scrollTo(0, 0);
+    updateActive();
   });
 });
 
@@ -1098,16 +1377,24 @@ sidebar.querySelectorAll('a').forEach(a => {
 });
 
 // Aside toggle
-const aside = document.getElementById('aside');
 const asideToggle = document.getElementById('asideToggle');
-function closeAside() { aside.classList.remove('open'); }
-asideToggle.addEventListener('click', () => { aside.classList.toggle('open'); });
+function closeAside() {
+  document.querySelectorAll('.aside').forEach(a => a.classList.remove('open'));
+}
+asideToggle.addEventListener('click', () => {
+  const activePanel = document.querySelector('.guide-panel.active .aside');
+  if (activePanel) activePanel.classList.toggle('open');
+});
 
-// Scroll spy
-const sections = document.querySelectorAll('section[id]');
-const navLinks = document.querySelectorAll('.sidebar a[data-section]');
-
+// Scroll spy (works with active panel sections)
 function updateActive() {
+  const activePanel = document.querySelector('.guide-panel.active');
+  if (!activePanel) return;
+  const sections = activePanel.querySelectorAll('section[id]');
+  const activeSidebar = document.querySelector('.sidebar-panel[data-guide="' + activeGuide + '"]');
+  if (!activeSidebar) return;
+  const navLinks = activeSidebar.querySelectorAll('a[data-section]');
+
   let current = '';
   sections.forEach(section => {
     const top = section.getBoundingClientRect().top;
