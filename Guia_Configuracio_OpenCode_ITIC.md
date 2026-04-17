@@ -42,7 +42,7 @@ node --version
 ### Windows (PowerShell com a Administrador)
 ```powershell
 # Opcio A: Via npm (recomanat)
-npm install -g opencode
+npm install -g opencode-ai
 
 # Opcio B: Installacio directa
 irm https://opencode.ai/install.ps1 | iex
@@ -51,7 +51,7 @@ irm https://opencode.ai/install.ps1 | iex
 ### macOS / Linux
 ```bash
 # Opcio A: Via npm (recomanat)
-npm install -g opencode
+npm install -g opencode-ai
 
 # Opcio B: Installacio directa
 curl -fsSL https://opencode.ai/install.sh | bash
@@ -60,7 +60,7 @@ curl -fsSL https://opencode.ai/install.sh | bash
 ### Verificar la installacio
 ```bash
 opencode --version
-# Ha de mostrar: 1.2.27 o superior
+# Ha de mostrar: 1.4.8 o superior
 ```
 
 ---
