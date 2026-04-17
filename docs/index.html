@@ -1066,11 +1066,9 @@ curl -fsSL https://opencode.ai/install.sh | bash</code><button class="copy-btn" 
         <h3>Comprovar connexi&oacute; al servidor</h3>
         <pre><code>curl http://192.168.1.22:11434/api/tags</code><button class="copy-btn" onclick="copyCode(this)">Copiar</button></pre>
         <p>Ha de retornar una llista JSON amb els models disponibles.</p>
-        <h3>Llistar prove&iuml;dors configurats</h3>
-        <pre><code>opencode providers list</code><button class="copy-btn" onclick="copyCode(this)">Copiar</button></pre>
-        <p>Ha de mostrar <strong>"Ollama ITIC Barcelona"</strong> com a prove&iuml;dor.</p>
-        <h3>Llistar models</h3>
+        <h3>Llistar models disponibles</h3>
         <pre><code>opencode models ollama-itic</code><button class="copy-btn" onclick="copyCode(this)">Copiar</button></pre>
+        <p>Ha de mostrar els models configurats sota el prove&iuml;dor <strong>"Ollama ITIC Barcelona"</strong>.</p>
       </section>
 
       <section id="utilitzar">
@@ -1109,11 +1107,12 @@ opencode --continue</code><button class="copy-btn" onclick="copyCode(this)">Copi
             <tr><th>Comanda</th><th>Descripci&oacute;</th></tr>
           </thead>
           <tbody>
-            <tr><td><code>/help</code></td><td>Mostra l'ajuda</td></tr>
-            <tr><td><code>/model</code></td><td>Canvia de model</td></tr>
-            <tr><td><code>/clear</code></td><td>Neteja la conversa</td></tr>
-            <tr><td><code>/save</code></td><td>Desa la sessi&oacute;</td></tr>
-            <tr><td><code>/exit</code> o <code>Ctrl+C</code></td><td>Surt d'OpenCode</td></tr>
+            <tr><td><code>/help</code></td><td>Mostra l'ajuda i la llista de comandes</td></tr>
+            <tr><td><code>/init</code></td><td>Inicialitza el projecte actual (crea AGENTS.md)</td></tr>
+            <tr><td><code>/undo</code></td><td>Desfer els darrers canvis</td></tr>
+            <tr><td><code>/redo</code></td><td>Refer els canvis desfets</td></tr>
+            <tr><td><code>/share</code></td><td>Comparteix la sessi&oacute; actual</td></tr>
+            <tr><td><code>Ctrl+C</code></td><td>Surt d'OpenCode</td></tr>
           </tbody>
         </table>
       </section>

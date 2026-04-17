@@ -211,17 +211,12 @@ curl http://192.168.1.22:11434/api/tags
 
 Ha de retornar una llista JSON amb els models disponibles.
 
-### Llistar proveidors configurats
-```bash
-opencode providers list
-```
-
-Ha de mostrar "Ollama ITIC Barcelona" com a proveidor disponible.
-
 ### Llistar models disponibles
 ```bash
 opencode models ollama-itic
 ```
+
+Ha de mostrar els models configurats sota el proveidor "Ollama ITIC Barcelona".
 
 ---
 
@@ -265,11 +260,12 @@ Un cop dins de la interficie d'OpenCode:
 
 | Comanda | Descripcio |
 |---------|------------|
-| `/help` | Mostra l'ajuda |
-| `/model` | Canvia de model |
-| `/clear` | Neteja la conversa |
-| `/save` | Guarda la sessio |
-| `/exit` o `Ctrl+C` | Surt d'OpenCode |
+| `/help` | Mostra l'ajuda i la llista de comandes |
+| `/init` | Inicialitza el projecte actual (crea AGENTS.md) |
+| `/undo` | Desfer els darrers canvis |
+| `/redo` | Refer els canvis desfets |
+| `/share` | Comparteix la sessio actual |
+| `Ctrl+C` | Surt d'OpenCode |
 
 ---
 
